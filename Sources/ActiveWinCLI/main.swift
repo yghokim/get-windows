@@ -85,6 +85,9 @@ func getWindowInformation(window: [String: Any], windowOwnerPID: pid_t) -> [Stri
 let disableScreenRecordingPermission = CommandLine.arguments.contains("--no-screen-recording-permission")
 let enableOpenWindowsList = CommandLine.arguments.contains("--open-windows-list")
 
+/* Commented this permission check out to avoid a bug in production, where the app keeps asking for permissions even if the user has already granted them.
+   This is a temporary workaround until we can fix the underlying issue. // Young-Ho Kim 2025-06-11
+
 // Show accessibility permission prompt if needed. Required to get the complete window title.
 if !AXIsProcessTrustedWithOptions(["AXTrustedCheckOptionPrompt": true] as CFDictionary) {
 	print("active-win requires the accessibility permission in “System Preferences › Security & Privacy › Privacy › Accessibility”.")
@@ -96,6 +99,8 @@ if !disableScreenRecordingPermission && !hasScreenRecordingPermission() {
 	print("active-win requires the screen recording permission in “System Preferences › Security & Privacy › Privacy › Screen Recording”.")
 	exit(1)
 }
+
+*/
 
 guard
 	let frontmostAppPID = NSWorkspace.shared.frontmostApplication?.processIdentifier,
